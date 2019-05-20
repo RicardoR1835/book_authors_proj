@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="container">
+            <h1>{{ books.title }}</h1>
+            <p>ID: {{ books.id }}</p>
+            <p>Description: {{ books.description }}</p>
+            <p>Authors:</p>
+            <ul>
+                {% for author in books.author.all %}
+                <li>{{ author.first_name }} {{ author.last_name }}</li>
+                {% endfor %}
+            </ul>
+            <form action="add_auth_to_book" method="POST">
+                    {% csrf_token %}
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Add an author</label>
+                    <select name='id' class="form-control" id="exampleFormControlSelect1">
+                        <option>Select Author</option>
+                        {% for authors in authors %}
+                        {% if authors not in books.author.all %}
+                        <option name="id" value="{{ authors.id }}">{{ authors.first_name }} {{ authors.last_name }}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <input type="submit" value="Add" class="btn btn-dark">
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
